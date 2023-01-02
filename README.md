@@ -19,16 +19,12 @@ Welcome to the Badbank, a user-friendly online banking application built with th
 ## Getting Started
 ### To get started with the Bank of MERN, follow these steps:
 
-- Clone the repository to your local machine:
-- Copy code
-- git clone 
+- Clone the repository to your local machine
 - Install the dependencies:
-- Copy code
-- npm install
 - Set up the development environment by creating a .env file in the root directory of the project and adding the following variables:
 - Copy code
-- MONGODB_URI=mongodb://localhost/bank-of-mern
-- SECRET=your-secret-key
+-- MONGODB_URI=mongodb://localhost/bank-of-mern
+-- SECRET=your-secret-key
 - Start the development server:
 - Copy code
 - npm run dev
