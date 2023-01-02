@@ -5,7 +5,7 @@
   "main": "bbserver.js",
   "scripts": {
     "install": "npm install",
-    "start": "nodemon bbserver.js"
+    "start": "node bbserver.js"
   },
   "repository": {
     "type": "git",
