@@ -1,0 +1,25 @@
+{
+  "name": "badbank",
+  "version": "1.3.0",
+  "description": "Simulated banking app for MITxPro",
+  "main": "bbserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicholasrea/NRbadbank.git"
+  },
+  "keywords": [
+    "badbank"
+  ],
+  "author": "n.rea08@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nicholasrea/NRbadbank/issues"
+  },
+  "homepage": "https://github.com/nicholasrea/NRbadbank#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
