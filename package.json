@@ -4,15 +4,13 @@
   "description": "Simulated banking app for MITxPro",
   "main": "bbserver.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "npm install",
+    "start": "node bbserver.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nicholasrea/NRbadbank.git"
   },
-  "keywords": [
-    "badbank"
-  ],
   "author": "n.rea08@gmail.com",
   "license": "MIT",
   "bugs": {
