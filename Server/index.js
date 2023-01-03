@@ -1,11 +1,13 @@
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const dal = require("./dal"); // A module that handles database queries
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config()
+import express, { json } from "express";
+import { verify, sign } from "jsonwebtoken";
+import { hash, compare } from "bcryptjs";
+import { createUser, getUserByUsername, updateUserBalance } from "./dal"; // A module that handles database queries
 
 const app = express();
 
-app.use(express.json()); // Parse JSON payloads in request bodies
+app.use(json()); // Parse JSON payloads in request bodies
 
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET; // A secret used to sign JWTs
@@ -17,7 +19,7 @@ const authenticate = (req, res, next) => {
     return res.status(401).send({ error: "Access denied. No token provided" });
   }
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = verify(token, process.env.JWT_SECRET);
     req.userId = decoded.userId;
     next();
   } catch (error) {
@@ -29,9 +31,9 @@ const authenticate = (req, res, next) => {
 app.post("/signup", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10); // Hashes the password, so username and Password aren't stored in the same DB
-    const user = await dal.createUser(email, hashedPassword);
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET); // Creates a JWT for the user
+    const hashedPassword = await hash(password, 10); // Hashes the password, so username and Password aren't stored in the same DB
+    const user = await createUser(email, hashedPassword);
+    const token = sign({ userId: user._id }, JWT_SECRET); // Creates a JWT for the user
     res.send({ token });
   } catch (error) {
     console.error(error);
@@ -43,15 +45,15 @@ app.post("/signup", async (req, res) => {
 app.post("/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await dal.getUserByUsername(email); // Gets the user from the database by email
+    const user = await getUserByUsername(email); // Gets the user from the database by email
     if (!user) {
       return res.status(401).send({ error: "Invalid email or password" });
     }
-    const passwordMatches = await bcrypt.compare(password, user.password); // Compares the hashed password to the password provided by the user
+    const passwordMatches = await compare(password, user.password); // Compares the hashed password to the password provided by the user
     if (!passwordMatches) {
       return res.status(401).send({ error: "Invalid email or password" });
     }
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET); // Creates a JWT for the user
+    const token = sign({ userId: user._id }, JWT_SECRET); // Creates a JWT for the user
     res.send({ token });
   } catch (error) {
     console.error(error);
@@ -63,9 +65,9 @@ app.post("/signin", async (req, res) => {
 app.post("/deposit", authenticate, async (req, res) => {
   try {
     const { amount } = req.body;
-    const user = await dal.getUserByUsername(req.userId);
+    const user = await getUserByUsername(req.userId);
     user.balance += Number(amount);
-    await dal.updateUserBalance(user);
+    await updateUserBalance(user);
     res.send("Deposit successful");
   } catch (error) {
     console.error(error);
@@ -77,9 +79,9 @@ app.post("/deposit", authenticate, async (req, res) => {
 app.post("/withdraw", authenticate, async (req, res) => {
   try {
     const { amount } = req.body;
-    const user = await dal.getUserByUsername(req.userId);
+    const user = await getUserByUsername(req.userId);
     user.balance -= Number(amount);
-    await dal.updateUserBalance(user);
+    await updateUserBalance(user);
     res.send("Deposit successful");
   } catch (error) {
     console.error(error);
