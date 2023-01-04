@@ -6,19 +6,24 @@ import { Link } from 'react-router-dom'
 
 
 export default function SignUp() {
+  //declare state, and use react Ref's
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false)
   const emailRef = useRef();
   const passwordRef = useRef();
   
+  //callback function to hanndle the call to the back end
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      setLoading(true);
       const data = { 
         email: emailRef.current.value, 
         password: passwordRef.current.value 
       }
-      console.log(JSON.stringify(data))
+      //
+      console.log(JSON.stringify(data)) //remove post testing
+      
       const response = await axios.post('https://badbankapi.onrender.com/signup', data)
       const { token } = response.data  // recieves the token from the sever
       const { signIn } = useContext(AuthContext) // get access to local context
@@ -26,16 +31,17 @@ export default function SignUp() {
       alert(`Welcome to the badbank ${data.email}`)
 
     } catch (error) {
-      setError(error)
+      setError(error) // creates an error block to display to user
       console.error(error)
     }
+    setLoading(false);
   }
   
    
   return (
     <>
     <Card>
-      <Card.Body>
+      <Card.Body>  
         <h2 className="text-center mb-4">Sign Up</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
