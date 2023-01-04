@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 
-export default function SignUp() {
+export default function Login() {
   //declare state, and use react Ref's
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false)
@@ -24,7 +24,7 @@ export default function SignUp() {
       //
       console.log(JSON.stringify(data)) //remove post testing
       
-      const response = await axios.post('https://badbankapi.onrender.com/signup', data)
+      const response = await axios.post('https://badbankapi.onrender.com/login', data)
       const { token } = response.data  // recieves the token from the sever
       const { signIn } = useContext(AuthContext) // get access to local context
       signIn(token) // passes token to Context 
@@ -42,7 +42,7 @@ export default function SignUp() {
     <>
     <Card>
       <Card.Body>  
-        <h2 className="text-center mb-4">Sign Up</h2>
+        <h2 className="text-center mb-4">Login</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group id="email">
@@ -60,7 +60,7 @@ export default function SignUp() {
       </Card.Body>
     </Card>
     <div className="w-100 text-center mt-2">
-      Already have an account? <Link to='/login'>Log In</Link>
+      Need an Account? <Link to='/signup'>Sign Up</Link>
     </div>
   </>
   )
