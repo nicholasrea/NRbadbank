@@ -1,10 +1,13 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const cors = require('cors');
 const dal = require("./dal"); // A module that handles database queries
 
-const app = express();
+require('dotenv').config(); // Pulls in .env variables
 
+const app = express();
+app.use(cors());
 app.use(express.json()); // Parse JSON payloads in request bodies
 
 const PORT = process.env.PORT || 5000;
