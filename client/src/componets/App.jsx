@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "./Login";
 import SignUp from "./SignUp";
-import Transaction from "./Transaction";
+import Navigation from "./Navigation";
 import Home from './Home';
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
     <>
       <AuthProvider>
         <Router>
+          <Navigation />
           <Container
             className="d-flex align-items-center justify-content-center"
             style={{ minHeight: "90vh" }}
