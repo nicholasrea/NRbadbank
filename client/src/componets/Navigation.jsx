@@ -1,10 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import AuthContext from '../auth/AuthContext';
 import { Link, NavLink } from 'react-router-dom';
 
 export default function Navigation() {
-  const { email } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const [currentUser, setCurrentUser] = useState(false);
+
+  useEffect(() => {
+    user ? setCurrentUser (true) : setCurrentUser(false);
+  }, [user] )
 
   return (
     <Navbar bg="light" expand="lg">
@@ -26,7 +31,7 @@ export default function Navigation() {
         </Nav>
       </Navbar.Collapse>
       <Navbar.Text>
-        Signed in as: <a href="#login">{email}</a>
+        {user && <div>Signed in as: {user.email}</div>}
       </Navbar.Text>
     </Navbar>
   );
