@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import AuthContext from '../auth/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function Navigation() {
   const { email } = useContext(AuthContext);
@@ -14,18 +14,15 @@ export default function Navigation() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Link to="/home" className="nav-link">
+          <NavLink to="/" className="nav-link">
             Home
-          </Link>
-          <Link to="/link1" className="nav-link">
-            Link 1
-          </Link>
-          <Link to="/link2" className="nav-link">
-            Link 2
-          </Link>
-          <Link to="/link3" className="nav-link">
-            Link 3
-          </Link>
+          </NavLink>
+          <NavLink to="/link1" className="nav-link">
+            NavLink 1
+          </NavLink>
+          <NavLink to="/link2" className="nav-link">
+            NavLink 2
+          </NavLink>
         </Nav>
       </Navbar.Collapse>
       <Navbar.Text>

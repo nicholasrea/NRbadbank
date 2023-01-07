@@ -1,10 +1,10 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const cors = require('cors');
+const cors = require("cors");
 const dal = require("./dal"); // A module that handles database queries
 
-require('dotenv').config(); // Pulls in .env variables
+require("dotenv").config(); // Pulls in .env variables
 
 const app = express();
 app.use(cors());
@@ -35,7 +35,7 @@ app.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10); // Hashes the password, so username and Password aren't stored in the same DB
     const user = await dal.createUser(email, hashedPassword);
     const token = jwt.sign({ userId: user._id }, JWT_SECRET); // Creates a JWT for the user
-    res.send({ token });
+    res.send({ token, user });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: "Error signing up user" });
@@ -55,7 +55,7 @@ app.post("/signin", async (req, res) => {
       return res.status(401).send({ error: "Invalid email or password" });
     }
     const token = jwt.sign({ userId: user._id }, JWT_SECRET); // Creates a JWT for the user
-    res.send({ token });
+    res.send({ token, user });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: "Error signing in user" });
@@ -83,7 +83,7 @@ app.post("/withdraw", authenticate, async (req, res) => {
     const user = await dal.getUserByUsername(req.userId);
     user.balance -= Number(amount);
     await dal.updateUserBalance(user);
-    res.send("Deposit successful");
+    res.send("Withdrawl successful");
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: "Error depositing funds" });

@@ -28,9 +28,10 @@ const handleSubmit = async (e) => {
         password: passwordRef.current.value,
       };
       const response = await client.post('/signup', data);
-      const { token } = response.data;
+      const { token, user } = response.data;
+      console.log(JSON.stringify(user))
       try {
-        await signIn(token);
+        await signIn(token, user);
       } catch (error) {
         console.error(error);
         setError(error);
