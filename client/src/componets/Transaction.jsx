@@ -7,7 +7,7 @@ const { user } = useContext(AuthContext)
   return (
     <>
       <div>Transaction</div>
-      <h1>{user.email}</h1>
+      <h1>{JSON.stringify(user)}</h1>
     </>
 
   )
