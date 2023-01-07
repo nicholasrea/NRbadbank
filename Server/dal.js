@@ -42,14 +42,14 @@ const createUser = async (email, password) => {
   return await user.save();
 };
 
-const updateUserBalance = async (email, amount) => {
+const updateUser = async (updatedUser) => {
   const user = await User.findById(email);
-  user.balance += amount;
+  user.set(updatedUser);
   return await user.save();
 };
 
 module.exports = {
   getUserByUsername,
   createUser,
-  updateUserBalance
+  updateUser
 };
