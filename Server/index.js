@@ -67,9 +67,11 @@ app.post("/signin", async (req, res) => {
 // TODO:  Fix the logic for the transactions <---  what's the best way to handle it?
 app.post("/deposit", authenticate, async (req, res) => {
   try {
-    const { amount, user } = req.body;
-    user.balance += amount;
-     
+    let { amount, user } = req.body;
+    amount = Number(amount);
+    let balance = Number(user.balance);
+    newBal = balance + amount;
+    await dal.deposit(user, newBal);
     res.send("Deposit successful");
   } catch (error) {
     console.error(error);
@@ -81,7 +83,7 @@ app.post("/deposit", authenticate, async (req, res) => {
 app.post("/withdraw", authenticate, async (req, res) => {
   try {
     const { amount } = req.body;
-    const user = await dal.getUserByUsername(req.userId);
+    let user = await dal.getUserByUsername(req.userId);
     user.balance -= Number(amount);
     await dal.updateUser(user);
     res.send("Withdrawl successful");

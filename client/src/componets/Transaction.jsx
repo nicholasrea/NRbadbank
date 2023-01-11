@@ -5,8 +5,13 @@ import axios from "axios";
 
 export default function Transaction(props) {
   const [loading, setLoading] = useState(false);
+  const [balance, setBalance] = useState()
   const { token, user } = useContext(AuthContext);
   const transactionRef = useRef();
+
+  function getBalance() {
+    setBalance(Number(user.balance));
+  }
   
   //sets the base url i.e. <---  Config, ? .env variable?
   const client = axios.create({
@@ -26,8 +31,8 @@ export default function Transaction(props) {
     try {
       const transaction = transactionRef.current.value;
       setLoading(true); //disables button
-      const data = { email:user.email, amount: transaction };
-      validateTransaction(user.balance, transaction);
+      const data = {user, amount: transaction  };
+      console.log(JSON.stringify(data))
       const response = await client.post(`/deposit`, data);
       if (response.status === 500) {
         throw new Error(response.status.error);
@@ -35,6 +40,7 @@ export default function Transaction(props) {
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
 
   return (
