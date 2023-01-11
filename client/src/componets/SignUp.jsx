@@ -2,7 +2,7 @@ import React, { useRef, useState, useContext } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import AuthContext from "../auth/AuthContext";
 import axios from "axios";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   //declare state, and use react Ref's
@@ -13,14 +13,14 @@ export default function SignUp() {
   const { signIn } = useContext(AuthContext); // get access to local context
   let navigate = useNavigate();
 
-  //sets the base url i.e. <---  Config, ? .env variable? 
+  //sets the base url i.e. <---  Config, ? .env variable?
   //TODO: Possibly Extract the axios client creation out so I future edits can be consolidated
   const client = axios.create({
     baseURL: "http://localhost:5000",
   });
 
   //callback function to hanndle the call to the back end
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true); // disables submit button
@@ -28,26 +28,21 @@ const handleSubmit = async (e) => {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       };
-      const response = await client.post('/signup', data);
+      const response = await client.post("/signup", data);
       const { token, user } = response.data;
       try {
-        await signIn(token, user);
+        await signIn(token, user); // sets context
       } catch (error) {
         console.error(error);
         setError(error);
       }
-        try {
-          navigate('/')
-        } catch (error){
-          console.error(error);
-          setError(error)
-        }
+      navigate("/"); //reroutes to homepage
     } catch (error) {
-        console.error(error);
-        setError(error);
+      console.error(error);
+      setError(error);
     }
   };
-  return(
+  return (
     <>
       <Card>
         <Card.Body>

@@ -3,6 +3,8 @@ import { Navbar, Nav } from 'react-bootstrap';
 import AuthContext from '../auth/AuthContext';
 import { Link, NavLink } from 'react-router-dom';
 
+//TODO: ADD Logout functionality
+
 export default function Navigation() {
   const { user } = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState(false);
