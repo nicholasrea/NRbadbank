@@ -2,7 +2,7 @@ import React, { useRef, useState, useContext } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import AuthContext from "../auth/AuthContext";
 import axios from "axios";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   //declare state, and use react Ref's
@@ -19,7 +19,7 @@ export default function Login() {
   });
 
   //callback function to hanndle the call to the back end
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true); // disables submit button
@@ -27,26 +27,21 @@ const handleSubmit = async (e) => {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       };
-      const response = await client.post('/signin', data);
-      const { token } = response.data;
+      const response = await client.post("/signin", data);
+      const { token, user } = response.data;
       try {
-        await signIn(token);
+        await signIn(token, user);
       } catch (error) {
         console.error(error);
         setError(error);
       }
-        try {
-          navigate('/')
-        } catch (error){
-          console.error(error);
-          setError(error)
-        }
+      navigate("/");
     } catch (error) {
-        console.error(error);
-        setError(error);
+      console.error(error);
+      setError(error);
     }
   };
-  return(
+  return (
     <>
       <Card>
         <Card.Body>
