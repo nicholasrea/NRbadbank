@@ -4,7 +4,7 @@ import SignUp from './SignUp'
 import Transaction from './Transaction'
 
 export default function Home() {
-  const { token } = useContext(AuthContext)
+  const { token, user } = useContext(AuthContext)
   if (token)  return <Transaction />
   else return <SignUp /> 
 }
