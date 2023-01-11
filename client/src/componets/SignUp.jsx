@@ -13,7 +13,8 @@ export default function SignUp() {
   const { signIn } = useContext(AuthContext); // get access to local context
   let navigate = useNavigate();
 
-  //sets the base url i.e. <---  Config, ? .env variable?
+  //sets the base url i.e. <---  Config, ? .env variable? 
+  //TODO: Possibly Extract the axios client creation out so I future edits can be consolidated
   const client = axios.create({
     baseURL: "http://localhost:5000",
   });
@@ -29,7 +30,6 @@ const handleSubmit = async (e) => {
       };
       const response = await client.post('/signup', data);
       const { token, user } = response.data;
-      console.log(JSON.stringify(user))
       try {
         await signIn(token, user);
       } catch (error) {

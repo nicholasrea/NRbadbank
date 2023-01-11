@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+mongoose.set('strictQuery', false);
 const uri = `mongodb://localhost:27017/test`;
 
 // Connect to MongoDB using the MONGODB_URI from the .env file
@@ -42,14 +42,13 @@ const createUser = async (email, password) => {
   return await user.save();
 };
 
-const updateUser = async (updatedUser) => {
-  const user = await User.findById(email);
-  user.set(updatedUser);
-  return await user.save();
-};
+const updateUser = async (email) => {
+
+}
 
 module.exports = {
   getUserByUsername,
   createUser,
-  updateUser
+  deposit,
+  withdraw
 };

@@ -15,12 +15,13 @@ const JWT_SECRET = process.env.JWT_SECRET; // A secret used to sign JWTs
 
 // Middleware function to authenticate user using JWT
 const authenticate = (req, res, next) => {
-  const token = req.header("Authorization");
+  const token = req.header("Authorization").split(" ")[1];
   if (!token) {
     return res.status(401).send({ error: "Access denied. No token provided" });
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.jwtPayload = decoded;
     req.userId = decoded.userId;
     next();
   } catch (error) {
@@ -63,12 +64,12 @@ app.post("/signin", async (req, res) => {
 });
 
 // Deposit funds into the authenticated user's account
+// TODO:  Fix the logic for the transactions <---  what's the best way to handle it?
 app.post("/deposit", authenticate, async (req, res) => {
   try {
-    const { amount } = req.body;
-    const user = await dal.getUserByUsername(req.userId);
-    user.balance += Number(amount);
-    await dal.updateUserBalance(user);
+    const { amount, user } = req.body;
+    user.balance += amount;
+     
     res.send("Deposit successful");
   } catch (error) {
     console.error(error);
@@ -82,7 +83,7 @@ app.post("/withdraw", authenticate, async (req, res) => {
     const { amount } = req.body;
     const user = await dal.getUserByUsername(req.userId);
     user.balance -= Number(amount);
-    await dal.updateUserBalance(user);
+    await dal.updateUser(user);
     res.send("Withdrawl successful");
   } catch (error) {
     console.error(error);
