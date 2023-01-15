@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import AuthContext from "../auth/AuthContext";
 import axios from "axios";
@@ -6,13 +6,9 @@ import axios from "axios";
 export default function Transaction(props) {
   const [loading, setLoading] = useState(false);
   const [balance, setBalance] = useState()
-  const { token, user } = useContext(AuthContext);
+  const { token, user, updateUser } = useContext(AuthContext);
   const transactionRef = useRef();
-
-  function getBalance() {
-    setBalance(Number(user.balance));
-  }
-  
+   
   //sets the base url i.e. <---  Config, ? .env variable?
   const client = axios.create({
     baseURL: "http://localhost:5000",
@@ -21,9 +17,15 @@ export default function Transaction(props) {
     }
   });
 
-  //TODO, Write transaction validation logic
-  function validateTransaction(balance, transaction) {
+  function blanceSettter(){
+    setBalance(user.balance)
+  }
 
+
+  //TODO, Write transaction validation logic
+  function validateTransaction(bal, trans) {
+    if(bal < 0) throw new Error("Please enter a vaild number for transaction!")
+    if(trans > bal && props.id === "deposit") throw new Error("Insuffiecnet Funds")
   };
 
   const handleSubmit = async (e) => {
@@ -31,23 +33,26 @@ export default function Transaction(props) {
     try {
       const transaction = transactionRef.current.value;
       setLoading(true); //disables button
+      validateTransaction( balance, transaction)
       const data = {user, amount: transaction  };
-      console.log(JSON.stringify(data))
       const response = await client.post(`/deposit`, data);
       if (response.status === 500) {
         throw new Error(response.status.error);
       }
+      updateUser(response);
     } catch (error) {
       console.error(error);
     }
     setLoading(false);
   };
+  useEffect(() => {blanceSettter()
+  }, [user] )
 
   return (
     <>
       <Card>
         <Card.Header className="text-center mb-4">
-          Current Balance: ${user.balance}
+          Current Balance: ${balance}
         </Card.Header>
         <Card.Body>
           <Form onSubmit={handleSubmit}>

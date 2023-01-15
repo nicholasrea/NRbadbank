@@ -8,7 +8,13 @@ const AuthProvider = ({ children }) => {
   const signIn = (jwt, user) => {
     setToken(jwt)
     setUser(user)
+    console.log(JSON.stringify(user))
     localStorage.setItem('token', jwt)
+  }
+
+  const updateUser = (user) => {
+    setUser(user.data)
+    console.log(JSON.stringify(user.data))
   }
 
   const signOut = () => {
@@ -18,7 +24,7 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ token, user,  signIn, signOut }}>
+    <AuthContext.Provider value={{ token, user,  signIn, signOut, updateUser }}>
       {children}
     </AuthContext.Provider>
   )

@@ -65,14 +65,15 @@ app.post("/signin", async (req, res) => {
 
 // Deposit funds into the authenticated user's account
 // TODO:  Fix the logic for the transactions <---  what's the best way to handle it?
+// TODO:  Better Error Handling. 
 app.post("/deposit", authenticate, async (req, res) => {
   try {
     let { amount, user } = req.body;
     amount = Number(amount);
     let balance = Number(user.balance);
     newBal = balance + amount;
-    await dal.deposit(user, newBal);
-    res.send("Deposit successful");
+    const updatedUser = await dal.deposit(user, newBal);
+    res.send(updatedUser);
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: "Error depositing funds" });
