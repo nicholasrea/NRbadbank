@@ -42,7 +42,7 @@ const createUser = async (email, password) => {
   return await user.save();
 };
 
-const deposit = async (user, bal) => {
+const updateUser = async (user, bal) => {
   const filter = { email: user.email }
   const update = { balance: bal}
   return await User.findOneAndUpdate(filter, update, {
@@ -51,8 +51,9 @@ const deposit = async (user, bal) => {
   });
 }
 
+
 module.exports = {
   getUserByUsername,
   createUser,
-  deposit
+  updateUser
 };

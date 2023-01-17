@@ -72,7 +72,7 @@ app.post("/deposit", authenticate, async (req, res) => {
     amount = Number(amount);
     let balance = Number(user.balance);
     let newBal = balance + amount;
-    const updatedUser = await dal.deposit(user, newBal);
+    const updatedUser = await dal.updateUser(user, newBal);
     res.send(updatedUser);
   } catch (error) {
     console.error(error);
@@ -83,7 +83,7 @@ app.post("/deposit", authenticate, async (req, res) => {
 // Withdraw funds into the authenticated user's account
 app.post("/withdraw", authenticate, async (req, res) => {
   try {
-    const { amount, user } = req.body;
+    let { amount, user } = req.body;
     amount = Number(amount);
     let balance = Number(user.balance);
     let newBal = balance - amount

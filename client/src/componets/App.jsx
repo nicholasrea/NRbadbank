@@ -6,6 +6,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import Navigation from "./Navigation";
 import Home from './Home';
+import Transaction from "./Transaction";
 
 function App() {
   return (
@@ -22,8 +23,8 @@ function App() {
                 <Route exact path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/deposit" element={<Transacion id='Deposit' />} />
-                <Route path="/withdraw" element={<Transacion id='Withdraw' />} /> 
+                <Route path="/deposit" element={<Transaction id='deposit' />} />
+                <Route path="/withdraw" element={<Transaction id='withdraw' />} /> 
  
               </Routes>
             </div>

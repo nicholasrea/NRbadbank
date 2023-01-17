@@ -59,7 +59,7 @@ export default function Transaction(props) {
         <Card.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group id="transaction" />
-            <Form.Label>Enter amount for DEPOSIT</Form.Label>
+            <Form.Label>Enter amount for {props.id}</Form.Label>
             <Form.Control type="number" ref={transactionRef} required />
             <Button className="w100 mt-4" disabled={loading} type="submit">
               Submit
