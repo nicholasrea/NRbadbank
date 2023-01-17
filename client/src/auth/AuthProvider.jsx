@@ -13,8 +13,8 @@ const AuthProvider = ({ children }) => {
   }
 
   const updateUser = (user) => {
-    setUser(user.data)
-    console.log(JSON.stringify(user.data))
+    setUser(user)
+   
   }
 
   const signOut = () => {

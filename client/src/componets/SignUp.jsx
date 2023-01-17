@@ -36,6 +36,7 @@ export default function SignUp() {
         console.error(error);
         setError(error);
       }
+      alert('Thank you for Creating an Account')
       navigate("/"); //reroutes to homepage
     } catch (error) {
       console.error(error);

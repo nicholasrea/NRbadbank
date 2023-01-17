@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default function Transaction(props) {
   const [loading, setLoading] = useState(false);
-  const [balance, setBalance] = useState()
+  const [balance, setBalance] = useState();
   const { token, user, updateUser } = useContext(AuthContext);
   const transactionRef = useRef();
    
@@ -25,7 +25,7 @@ export default function Transaction(props) {
   //TODO, Write transaction validation logic
   function validateTransaction(bal, trans) {
     if(bal < 0) throw new Error("Please enter a vaild number for transaction!")
-    if(trans > bal && props.id === "deposit") throw new Error("Insuffiecnet Funds")
+    if(trans > bal && props.id === "withdraw") throw new Error("Insuffiecnet Funds")
   };
 
   const handleSubmit = async (e) => {
@@ -35,16 +35,18 @@ export default function Transaction(props) {
       setLoading(true); //disables button
       validateTransaction( balance, transaction)
       const data = {user, amount: transaction  };
-      const response = await client.post(`/deposit`, data);
+      const response = await client.post(`/${props.id}`, data); // for transaction or withdraw
       if (response.status === 500) {
         throw new Error(response.status.error);
       }
-      updateUser(response);
+      updateUser(response.data);
     } catch (error) {
       console.error(error);
     }
     setLoading(false);
   };
+
+  // Reloads when the user object updates.  
   useEffect(() => {blanceSettter()
   }, [user] )
 

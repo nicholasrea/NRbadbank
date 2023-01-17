@@ -9,6 +9,7 @@ export default function Navigation() {
   const { user } = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState(false);
 
+  // Flip flag, to trigger a refresh if user is updated. 
   useEffect(() => {
     user ? setCurrentUser (true) : setCurrentUser(false);
   }, [user] )
@@ -16,7 +17,7 @@ export default function Navigation() {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand>
-        <Link to="/">My App</Link>
+        <Link to="/">BadBank</Link>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -24,11 +25,8 @@ export default function Navigation() {
           <NavLink to="/" className="nav-link">
             Home
           </NavLink>
-          <NavLink to="/link1" className="nav-link">
-            NavLink 1
-          </NavLink>
-          <NavLink to="/link2" className="nav-link">
-            NavLink 2
+          <NavLink to="/login" className="nav-link">
+            Log In
           </NavLink>
         </Nav>
       </Navbar.Collapse>
