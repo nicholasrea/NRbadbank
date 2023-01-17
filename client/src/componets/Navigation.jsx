@@ -6,7 +6,7 @@ import { Link, NavLink } from 'react-router-dom';
 //TODO: ADD Logout functionality
 
 export default function Navigation() {
-  const { user } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState(false);
 
   // Flip flag, to trigger a refresh if user is updated. 
@@ -14,6 +14,7 @@ export default function Navigation() {
     user ? setCurrentUser (true) : setCurrentUser(false);
   }, [user] )
 
+    
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand>
@@ -22,16 +23,19 @@ export default function Navigation() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <NavLink to="/" className="nav-link">
-            Home
-          </NavLink>
           <NavLink to="/login" className="nav-link">
             Log In
           </NavLink>
+          <NavLink to="/deposit" disabled={!user} className="nav-link">
+            Deposit
+          </NavLink>
+          <NavLink to="/withdraw" disabled={!user} className="nav-link">
+            Withdraw
+          </NavLink>                         
         </Nav>
       </Navbar.Collapse>
       <Navbar.Text>
-        {user && <div>Signed in as: {user.email}</div>}
+        {user && <div onClick={signOut}>Signed in as: {user.email}</div>}
       </Navbar.Text>
     </Navbar>
   );
