@@ -22,6 +22,9 @@ function App() {
                 <Route exact path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/deposit" element={<Transacion id='Deposit' />} />
+                <Route path="/withdraw" element={<Transacion id='Withdraw' />} /> 
+ 
               </Routes>
             </div>
           </Container>
