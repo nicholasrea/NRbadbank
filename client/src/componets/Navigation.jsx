@@ -35,7 +35,7 @@ export default function Navigation() {
         </Nav>
       </Navbar.Collapse>
       <Navbar.Text>
-        {user && <div onClick={signOut}>Signed in as: {user.email}</div>}
+        {user && <div>Signed in as: <a onClick={signOut}>{user.email}</a></div>}
       </Navbar.Text>
     </Navbar>
   );

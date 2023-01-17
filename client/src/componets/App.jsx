@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Navigation from "./Navigation";
-import Home from './Home';
+import Home from "./Home";
 import Transaction from "./Transaction";
 
 function App() {
@@ -23,9 +23,28 @@ function App() {
                 <Route exact path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/deposit" element={<Transaction id='deposit' />} />
-                <Route path="/withdraw" element={<Transaction id='withdraw' />} /> 
- 
+                <Route
+                  path="/deposit"
+                  element={
+                    <Transaction
+                      id="deposit"
+                      placeholder="Deposit"
+                      opp="Withdraw"
+                      link="/withdraw"
+                    />
+                  }
+                />
+                <Route
+                  path="/withdraw"
+                  element={
+                    <Transaction
+                      id="withdraw"
+                      placeholder="Withdraw"
+                      opp="Deposit"
+                      link="/deposit"
+                    />
+                  }
+                />
               </Routes>
             </div>
           </Container>
