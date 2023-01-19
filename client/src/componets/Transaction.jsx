@@ -12,7 +12,7 @@ export default function Transaction(props) {
 
   //sets the base url i.e. <---  Config, ? .env variable?
   const client = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://badbankapi.onrender.com",
     headers: {
       Authorization: "Bearer " + token,
     },

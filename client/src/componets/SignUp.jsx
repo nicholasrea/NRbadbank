@@ -16,7 +16,7 @@ export default function SignUp() {
   //sets the base url i.e. <---  Config, ? .env variable?
   //TODO: Possibly Extract the axios client creation out so I future edits can be consolidated
   const client = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://badbankapi.onrender.com",
   });
 
   //callback function to hanndle the call to the back end
