@@ -8,7 +8,7 @@ export default function Home() {
   if (token)
     return (
       <Transaction
-        id="withdraw"
+        id="deposit"
         placeholder="Deposit"
         opp="Withdraw"
         link="/withdraw"
