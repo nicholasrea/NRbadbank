@@ -19,7 +19,7 @@ export default function Navigation() {
     <Navbar bg="light" expand="lg">
       <Navbar.Brand>
         <Link to="/">
-          <img src={logo} alt="badbank" width="50" height="50" />
+          <img src={logo} alt="badbank" width="50" height="50" className="d-inline-block align-top"/>
         </Link>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -28,12 +28,12 @@ export default function Navigation() {
           {(!currentUser)  && <NavLink to="/login" className="nav-link">
             Log In
           </NavLink>}
-          <NavLink to="/deposit" disabled={!currentUser} className="nav-link">
+          {(currentUser) && <><NavLink to="/deposit" className="nav-link">
             Deposit
-          </NavLink>
-          <NavLink to="/withdraw" disabled={!currentUser} className="nav-link">
-            Withdraw
-          </NavLink>
+          </NavLink><NavLink to="/withdraw" className="nav-link">
+              Withdraw
+            </NavLink></>}
+
         </Nav>
       </Navbar.Collapse>
       <Navbar.Text>
