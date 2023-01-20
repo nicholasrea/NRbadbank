@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
-const uri = `badbank-db:27017/test`;
+const uri = `mongodb://badbank-db:27017/badbank`;
 
 // Connect to MongoDB using the MONGODB_URI from the .env file
 mongoose.connect(uri, {
